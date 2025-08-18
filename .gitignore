@@ -1,0 +1,7 @@
+models/*
+data/pandalm/train.json
+data/judgelm/judgelm_train_100k.jsonl
+__pycache__
+*.log
+__pycache__
+.env
