@@ -16,19 +16,19 @@ Please download pre-trained LLMs and put them under ``models``. Specifically, ou
 
 * [PandaLM-7B](https://huggingface.co/WeOpenML/PandaLM-7B-v1)
 
-* [Prometheus-7b-v1.0](https://huggingface.co/kaist-ai/prometheus-7b-v1.0)
+* [Prometheus-7b-v1.0](https://huggingface.co/prometheus-eval/prometheus-7b-v1.0)
 
 * [Auto-J-13b](https://huggingface.co/GAIR/autoj-13b)
 
-To obtain the calibrated reliability scores, or to finetune your own judge model for comparison, you also need to download the following base models:
+To obtain the calibrated reliability scores, you also need to download the following base models:
 
 * [Vicuna-7B](https://huggingface.co/lmsys/vicuna-7b-v1.3)
 
 * [Llama-7B](https://huggingface.co/huggyllama/llama-7b)
 
-* [Llama2-chat-7B](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
+* [Llama-2-7B-chat](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
 
-* [Llama2-chat-13B](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
+* [Llama-2-13B-chat](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
 
 Our study are based on the following data, and we have downloaded the respective testsets and put them under ``data``. 
 
@@ -40,7 +40,7 @@ Our study are based on the following data, and we have downloaded the respective
 
 * [Prometheus-test](https://github.com/kaistAI/prometheus/blob/main/evaluation/benchmark/data)
 
-* [MT-bench](https://huggingface.co/datasets/lmsys/mt_bench_human_judgments)
+* [MT-Bench](https://huggingface.co/datasets/lmsys/mt_bench_human_judgments)
 
 * [LLMBar](https://github.com/princeton-nlp/LLMBar/tree/main/Dataset/LLMBar)
 

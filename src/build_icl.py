@@ -25,8 +25,9 @@ def build_trainset(data_type, data_path):
                 else:
                     trainset['tie'].append(example)
                     eval_line = "So, the final decision is Tie."
-                
-                example["evaluation"] = example["evaluation"].split("\n")[-1] + "\n" + eval_line
+
+                example["evaluation"] = example["evaluation"].split(
+                    "\n")[-1] + "\n" + eval_line
 
     elif data_type == "pandalm":
         with open(os.path.join(data_path, "pandalm/train.json"), "r") as fin:
@@ -40,7 +41,7 @@ def build_trainset(data_type, data_path):
 
             # Extract winner from the first line of output_sequence
             winner = output_parts[0].strip()
-                
+
             # Based on winner assign score
             if winner == "1":
                 example["evaluation"] = "Response 1 is better."
@@ -77,11 +78,14 @@ def build_trainset(data_type, data_path):
             for part in input_parts:
                 section = part.strip()
                 if section.startswith("Instruction:"):
-                    example["question_body"] = section[len("Instruction:"):].strip()
+                    example["question_body"] = section[len(
+                        "Instruction:"):].strip()
                 elif section.startswith("Response 1:"):
-                    example["answer1_body"] = section[len("Response 1:"):].strip()
+                    example["answer1_body"] = section[len(
+                        "Response 1:"):].strip()
                 elif section.startswith("Response 2:"):
-                    example["answer2_body"] = section[len("Response 2:"):].strip()
+                    example["answer2_body"] = section[len(
+                        "Response 2:"):].strip()
 
             # Extract reason and reference from output_parts
             for part in output_parts[1:]:
@@ -93,7 +97,7 @@ def build_trainset(data_type, data_path):
 
             # example["evaluation"] = example["evaluation"] + "\n" + reason
             example["evaluation"] = reason + "\n" + example["evaluation"]
-            
+
             if winner == "1":
                 trainset["win"].append(example)
             elif winner == "2":
@@ -114,22 +118,27 @@ def build_demo_instruction(model_type, data_type):
         instruction = create_prompt(model_type, data_type)+"{evaluation}"
     return instruction
 
+
 def build_icl(data_type, data_path, model_type, test_samples, pos_num=2, neg_num=2, tie_num=1):
     dataset = []
     trainset = build_trainset(data_type, data_path)
     instruction = build_demo_instruction(model_type, data_type)
     for sample in test_samples:
-        demo_sample_win = np.random.choice(trainset['win'], pos_num, replace=False)
-        demo_sample_lose = np.random.choice(trainset['lose'], neg_num, replace=False)
-        demo_sample_tie = np.random.choice(trainset['tie'], tie_num, replace=False)
-        demo_samples = list(demo_sample_win) + list(demo_sample_lose) + list(demo_sample_tie)
+        demo_sample_win = np.random.choice(
+            trainset['win'], pos_num, replace=False)
+        demo_sample_lose = np.random.choice(
+            trainset['lose'], neg_num, replace=False)
+        demo_sample_tie = np.random.choice(
+            trainset['tie'], tie_num, replace=False)
+        demo_samples = list(demo_sample_win) + \
+            list(demo_sample_lose) + list(demo_sample_tie)
         random.shuffle(demo_samples)
         demo_samples = [demo_samples[0]]
         demonstrations = []
         for demo_sample in demo_samples:
             demonstrations.append(instruction.format(question_body=demo_sample["question_body"],
-                                                     answer1_body=demo_sample["answer1_body"], 
-                                                     answer2_body=demo_sample["answer2_body"], 
+                                                     answer1_body=demo_sample["answer1_body"],
+                                                     answer2_body=demo_sample["answer2_body"],
                                                      evaluation=demo_sample["evaluation"]))
         sample["demonstrations"] = "\n\n".join(demonstrations)
         dataset.append(sample)
