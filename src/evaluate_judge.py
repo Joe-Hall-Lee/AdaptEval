@@ -129,6 +129,9 @@ if __name__ == "__main__":
             if "general-public" in args.model_type.lower():
                 example["role_description"] = "You are now General Public, one of the referees in this task. You are interested in the story and looking for updates on the investigation. Please think critically by yourself and note that it's your responsibility to choose one of which is the better first."
                 example["agent_name"] = "General Public"
+            elif "critic" in args.model_type.lower():
+                example["role_description"] = "You are now Critic, one of the referees in this task. You will check fluent writing, clear sentences, and good wording in summary writing. Make sure your judgment is well-considered and offer an alternative solution if two responses are at the same level."
+                example["agent_name"] = "Critic"
             prompt = instruction.format(question_body=example["question_body"],
                                         role_description=example["role_description"],
                                         agent_name=example["agent_name"],
